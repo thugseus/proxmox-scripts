@@ -11,7 +11,7 @@ TEMPERR="$TEMPDIR/tmperr"
 LASTCMD=""
 WGETOPT="-t 1 -T 15 -q"
 DEVDEPS="git build-essential libffi-dev libssl-dev python3-dev"
-NPMURL="https://github.com/jc21/nginx-proxy-manager"
+NPMURL="https://github.com/NginxProxyManager/nginx-proxy-manager"
 
 cd $TEMPDIR
 touch $TEMPLOG
@@ -106,7 +106,7 @@ runcmd npm install --global yarn
 # Get latest version information for nginx-proxy-manager
 log "Checking for latest NPM release"
 runcmd 'wget $WGETOPT -O ./_latest_release $NPMURL/releases/latest'
-_latest_version=$(basename $(cat ./_latest_release | grep -wo "jc21/.*.tar.gz") .tar.gz | cut -d'v' -f2)
+_latest_version=$(cat ./_latest_release | grep -Po '(?<=expanded_assets/v)[^"]+')
 
 # Download nginx-proxy-manager source
 log "Downloading NPM v$_latest_version"
