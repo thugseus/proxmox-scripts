@@ -106,11 +106,11 @@ runcmd npm install --global yarn
 # Get latest version information for nginx-proxy-manager
 log "Checking for latest NPM release"
 runcmd 'wget $WGETOPT -O ./_latest_release $NPMURL/releases/latest'
-_latest_version="2.9.18"
+_latest_version=$(basename $(cat ./_latest_release | grep -wo "NginxProxyManager/nginx-proxy-manager/archive/refs/tags/.*.tar.gz") .tar.gz | cut -d'v' -f2)
 
 # Download nginx-proxy-manager source
 log "Downloading NPM v$_latest_version"
-runcmd 'wget $WGETOPT -c $NPMURL/archive/refs/tags/v2.9.18.tar.gz -O - | tar -xz'
+runcmd 'wget $WGETOPT -c $NPMURL/archive/refs/tags/v$_latest_version.tar.gz -O - | tar -xz'
 cd ./nginx-proxy-manager-$_latest_version
 
 log "Setting up enviroment"
